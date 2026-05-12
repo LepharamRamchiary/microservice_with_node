@@ -14,6 +14,12 @@ app.use(
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 
+// Health check
+app.get("/health", (req, res) => res.json({ status: "ok", service: "auth" }));
+
+// 404 fallback
+app.use((req, res) => res.status(404).json({ success: false, message: "Route not found" }));
+
 
 // routes import
 // import studentRouter from "./routers/student.router.js";

@@ -1,1 +1,1 @@
-export const DB_NAME = "micro"
+export const DB_NAME = "auth"

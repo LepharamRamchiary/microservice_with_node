@@ -1,0 +1,8 @@
+api-gateway/node_modules
+auth/node_modules
+product/node_modules
+
+
+api-gateway/.env
+auth/.env
+product/.env

@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import authRouter from "./routes/auth.routes.js";
 
 
 dotenv.config();
@@ -15,6 +16,8 @@ app.use(
 //json data
 app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
+
+app.use("/api/v1/auth", authRouter);
 
 // Health check
 app.get("/health", (req, res) => res.json({ status: "ok", service: "auth" }));

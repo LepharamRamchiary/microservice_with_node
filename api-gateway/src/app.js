@@ -1,17 +1,17 @@
 import express from "express";
 import cors from "cors";
-import { authRoutes } from "./routes/auth.routes.js";
-import { productRoutes } from "./routes/product.routes.js";
 
 const app = express();
 
 app.use(cors());
-app.use(express.json({ limit: "20mb" }));
+
+import { authRoutes } from "./routes/auth.routes.js";
+import { productRoutes } from "./routes/product.routes.js";
+
 
 // Routes
-app.use("/api/v1/auth", authRoutes);
-
-app.use("/api/v1/products", productRoutes);
+app.use("/api/v1", authRoutes);
+app.use("/api/v1", productRoutes);
 
 // Health check
 app.get("/health", (req, res) => {

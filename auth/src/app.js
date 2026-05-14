@@ -15,16 +15,19 @@ app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 // Health check
 app.get("/health", (req, res) => res.json({ status: "ok", service: "auth" }));
 
-// 404 fallback
-app.use((req, res) =>
-  res.status(404).json({ success: false, message: "Route not found" }),
-);
-
 // routes import
 import authRouter from "./routes/user.routes.js";
 
 // routes declaration
-app.use("/api/v1/auth", authRouter);
+app.use("/auth", authRouter);
+
+// 404 fallback
+app.use((req, res) =>
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  }),
+);
 
 // In app.js - update your error handler
 app.use((err, req, res, next) => {

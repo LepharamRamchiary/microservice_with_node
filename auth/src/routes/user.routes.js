@@ -3,8 +3,8 @@ import { register, login, verifyToken } from "../controllers/auth.controller.js"
 
 const router = Router();
 
-router.post("/register", register);
-router.post("/login", login);
-router.get("/verify", verifyToken); 
+router.route("/register").post(register);
+router.route("/login").post(login);
+router.route("/verify").get(verifyToken);
 
 export default router;

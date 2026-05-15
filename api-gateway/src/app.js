@@ -10,8 +10,8 @@ import { productRoutes } from "./routes/product.routes.js";
 
 
 // Routes
-app.use("/api/v1", authRoutes);
-app.use("/api/v1", productRoutes);
+app.use("/auth-api/v1", authRoutes);
+app.use("/product-api/v1", productRoutes);
 
 // Health check
 app.get("/health", (req, res) => {

@@ -14,7 +14,7 @@ export const authenticate = async (req, res, next) => {
     }
 
     // Ask the Auth Service to verify the token
-    const response = await fetch(`${AUTH_SERVICE_URL}/api/v1/auth/verify`, {
+    const response = await fetch(`${AUTH_SERVICE_URL}/auth/verify`, {
       headers: { authorization: authHeader },
     });
 

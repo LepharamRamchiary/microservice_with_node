@@ -8,7 +8,7 @@ app.use(cors());
 import { authRoutes } from "./routes/auth.routes.js";
 import { productRoutes } from "./routes/product.routes.js";
 
-
+// work tommorow
 // Routes
 app.use("/auth-api/v1", authRoutes);
 app.use("/product-api/v1", productRoutes);

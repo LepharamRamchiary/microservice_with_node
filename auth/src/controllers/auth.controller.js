@@ -114,16 +114,26 @@ export const verifyToken = async (req, res, next) => {
 
 export const getMyProfile = async (req, res, next) => {
   try {
-    return res
-      .status(200)
-      .json({
-        success: true,
-        user: req.user,
-        message: "Profile retrieved successfully",
-      });
+    return res.status(200).json({
+      success: true,
+      user: req.user,
+      message: "Profile retrieved successfully",
+    });
   } catch (err) {
     return res
       .status(401)
       .json({ success: false, message: "Faild to featch profile" });
+  }
+};
+
+export const logout = async (req, res, next) => {
+  try {
+    return res
+      .status(200)
+      .json({ success: true, message: "Logout successful" });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ success: false, message: "Failed to logout" });
   }
 };

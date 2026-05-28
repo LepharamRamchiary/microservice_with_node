@@ -33,6 +33,50 @@ export const createProduct = async (req, res, next) => {
   }
 };
 
+// PUT /api/v1/products/:id
+export const updateProduct = async (req, res, next) => {
+  const { id } = req.params;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid product ID" });
+    }
+
+    const { name, description, price, stock } = req.body;
+
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      {
+        name,
+        description,
+        price,
+        stock,
+      },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
+
+    // if product not found
+    if (!updatedProduct) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Product not found" });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Product updated successfully",
+      product: updatedProduct,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // GET /api/v1/products
 export const getProducts = async (req, res, next) => {
   try {

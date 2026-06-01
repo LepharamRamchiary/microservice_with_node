@@ -1,5 +1,6 @@
 ## Learing repo
 - Services
-    - Auth
-    - Product
-    - Api-gateway
+    - Auth service
+    - Product service
+    - Api-gateway service
+    - Order service

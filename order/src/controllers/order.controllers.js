@@ -40,3 +40,22 @@ export const createOrder = async (req, res, next) => {
     next(error);
   }
 };
+
+// GET /api/v1/orders/my-orders
+export const getMyOrders = async (req, res, next) => {
+  try {
+    const userId = req.headers["x-user-id"];
+
+    const orders = await Order.find({ userId }).sort({
+      createdAt: -1,
+    });
+
+    return res.status(200).json({
+      success: true,
+      count: orders.length,
+      orders,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

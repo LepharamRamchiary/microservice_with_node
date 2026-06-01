@@ -13,13 +13,13 @@ app.use(express.json({ limit: "20mb" }));
 app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 
 // routes import
-// import productRouter from "./router/product.route.js";
+import orderRouter from "./router/order.routes.js";
 
 // Health check
 app.get("/health", (req, res) => res.json({ status: "ok", service: "auth" }));
 
 // routes declaration
-// app.use("/products", productRouter);
+app.use("/orders", orderRouter);
 
 // 404 fallback
 app.use((req, res) =>

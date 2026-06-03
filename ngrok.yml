@@ -1,0 +1,15 @@
+version: "2"
+authtoken: 3Ed3bBI9KhtaU38Jd2D4qudNIUI_6QUHrwMTT8L3cyhEqDUG4
+tunnels:
+  api-gateway:
+    proto: http
+    addr: 8000
+  auth:
+    proto: http
+    addr: 8001
+  product:
+    proto: http
+    addr: 8002
+  order:
+    proto: http
+    addr: 8003

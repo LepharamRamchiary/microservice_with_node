@@ -7,13 +7,20 @@ dotenv.config();
 
 const router = express.Router();
 
+router.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    service: "product-service",
+  });
+});
+
 router.use(
   "/",
   authenticate,
   createProxyMiddleware({
     target: process.env.PRODUCT_SERVICE_URL,
     changeOrigin: true,
-  })
+  }),
 );
 
 export const productRoutes = router;

@@ -1,4 +1,5 @@
 import { Order } from "../models/order.model.js";
+import mongoose from "mongoose";
 
 // POST /api/v1/orders
 export const createOrder = async (req, res, next) => {
@@ -54,6 +55,35 @@ export const getMyOrders = async (req, res, next) => {
       success: true,
       count: orders.length,
       orders,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getOrderById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid order ID",
+      });
+    }
+
+    const order = await Order.findById(id);
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: "Order not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      order,
     });
   } catch (error) {
     next(error);

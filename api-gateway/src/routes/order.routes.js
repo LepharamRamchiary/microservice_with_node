@@ -7,6 +7,13 @@ dotenv.config();
 
 const router = express.Router();
 
+router.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    service: "order-service",
+  });
+});
+
 router.use(
   "/",
   authenticate,

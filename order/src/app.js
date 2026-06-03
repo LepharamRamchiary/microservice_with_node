@@ -15,8 +15,6 @@ app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 // routes import
 import orderRouter from "./router/order.routes.js";
 
-// Health check
-app.get("/health", (req, res) => res.json({ status: "ok", service: "auth" }));
 
 // routes declaration
 app.use("/orders", orderRouter);

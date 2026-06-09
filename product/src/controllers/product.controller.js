@@ -6,30 +6,30 @@ export const createProduct = async (req, res, next) => {
   try {
     const { name, description, price, stock } = req.body;
 
-    if (!name || price === undefined) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Name and price are required" });
+    if (!name || price == null) {
+      return res.status(400).json({
+        success: false,
+        message: "Name and price are required",
+      });
     }
 
-    // API Gateway forwards the authenticated user id in this header
-    const createdBy = req.headers["x-user-id"] || "unknown";
-
-    const product = await Product.create({
+    const productData = {
       name,
       description,
       price,
       stock,
-      createdBy,
-    });
+      createdBy: req.headers["x-user-id"] || "unknown",
+    };
+
+    const product = await Product.create(productData);
 
     return res.status(201).json({
       success: true,
       message: "Product created",
       product,
     });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 

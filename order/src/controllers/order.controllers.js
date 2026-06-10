@@ -1,4 +1,6 @@
 import { Order } from "../models/order.model.js";
+import { PushSubscription } from "../models/pushSubscription.model.js";
+import webpush from "../config/webPush.js";
 import mongoose from "mongoose";
 
 // POST /api/v1/orders
@@ -31,6 +33,35 @@ export const createOrder = async (req, res, next) => {
       priceAtPurchase,
       totalAmount,
     });
+
+    // Send notification to admin
+    const adminSubscription = await PushSubscription.findOne();
+
+    console.log("Admin Subscription:", adminSubscription);
+
+    if (adminSubscription) {
+      const payload = JSON.stringify({
+        title: "New Order Received",
+        body: `Order ${order._id} created`,
+      });
+
+      console.log("Notification Payload:", payload);
+
+      try {
+        const result = await webpush.sendNotification(
+          adminSubscription.subscription,
+          payload,
+        );
+
+        console.log("✅ Push notification sent successfully");
+        console.log(result);
+      } catch (error) {
+        console.error("❌ Push Notification Error:");
+        console.error(error);
+      }
+    } else {
+      console.log("❌ No subscription found in database");
+    }
 
     return res.status(201).json({
       success: true,
@@ -111,11 +142,7 @@ export const updateOrderStatus = async (req, res, next) => {
       });
     }
 
-    const order = await Order.findByIdAndUpdate(
-      id,
-      { status },
-      { new: true }
-    );
+    const order = await Order.findByIdAndUpdate(id, { status }, { new: true });
 
     if (!order) {
       return res.status(404).json({

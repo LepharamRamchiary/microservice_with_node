@@ -14,10 +14,12 @@ app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 
 // routes import
 import orderRouter from "./router/order.routes.js";
+import pushRouter from "./router/push.routes.js";
 
 
 // routes declaration
 app.use("/orders", orderRouter);
+app.use("/push", pushRouter);
 
 // 404 fallback
 app.use((req, res) =>

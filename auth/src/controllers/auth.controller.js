@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model.js";
+import logger from "../config/logger.js";
 
 // POST /api/v1/auth/register
 export const register = async (req, res, next) => {
@@ -7,6 +8,12 @@ export const register = async (req, res, next) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
+      logger.warn("Registration attempt with missing fields", {
+        ip: req.ip,
+        body: req.body,
+        email: email,
+      });
+
       return res
         .status(400)
         .json({ success: false, message: "All fields are required" });
@@ -14,6 +21,11 @@ export const register = async (req, res, next) => {
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
+      logger.warn("Registration attempt with already registered email", {
+        ip: req.ip,
+        email: email,
+      });
+
       return res
         .status(409)
         .json({ success: false, message: "Email already registered" });
@@ -29,6 +41,11 @@ export const register = async (req, res, next) => {
       },
     );
 
+    logger.info("New user registered", {
+      ip: req.ip,
+      userId: user._id,
+      email: user.email,
+    });
     return res.status(201).json({
       success: true,
       message: "User registered successfully",
@@ -72,6 +89,12 @@ export const login = async (req, res, next) => {
         expiresIn: "7d",
       },
     );
+
+    logger.info("User logged in", {
+      ip: req.ip,
+      userId: user._id,
+      email: user.email,
+    });
 
     return res.status(200).json({
       success: true,
@@ -120,9 +143,13 @@ export const getMyProfile = async (req, res, next) => {
       message: "Profile retrieved successfully",
     });
   } catch (err) {
+    logger.error("Failed to fetch profile", {
+      ip: req.ip,
+      userId: req.user._id,
+    });
     return res
       .status(401)
-      .json({ success: false, message: "Faild to featch profile" });
+      .json({ success: false, message: "Failed to fetch profile" });
   }
 };
 
@@ -132,6 +159,10 @@ export const logout = async (req, res, next) => {
       .status(200)
       .json({ success: true, message: "Logout successful" });
   } catch (error) {
+    logger.error("Failed to logout", {
+      ip: req.ip,
+      userId: req.user._id,
+    });
     return res
       .status(500)
       .json({ success: false, message: "Failed to logout" });

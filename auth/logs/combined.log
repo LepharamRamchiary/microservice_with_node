@@ -1,0 +1,3 @@
+{"email":"lepharamchiary12@gmail.come","ip":"::1","level":"warn","message":"Registration attempt with already registered email","timestamp":"2026-06-11T14:30:09.155Z"}
+{"email":"lepharamchiary123@gmail.come","ip":"::1","level":"info","message":"New user registered","timestamp":"2026-06-11T14:31:33.465Z","userId":"6a2ac6bfec3c79b8b5bbe84a"}
+{"email":"lepharamchiary@gmail.come","ip":"::1","level":"info","message":"User logged in","timestamp":"2026-06-11T14:33:10.597Z","userId":"6a05d0399fcb64bd0dc549aa"}

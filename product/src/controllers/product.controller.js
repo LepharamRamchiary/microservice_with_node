@@ -144,3 +144,5 @@ export const deleteProduct = async (req, res, next) => {
     next(error);
   }
 };
+
+// todays off bro sat was off for me

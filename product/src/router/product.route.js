@@ -15,4 +15,6 @@ router.route("/:id").delete(deleteProduct);
 router.route("/:id").get(getProductById);
 router.route("/:id").put(updateProduct);
 
+// working very very slowly, need to optimize it
+
 export default router;
